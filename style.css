@@ -218,9 +218,21 @@ body {
     }
 
     #buy-tickets {
-      width: 100%;
+      width: 45%;
       height: 100px;
       background-color: #4effc4;
       text-align: center;
       display: block;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    #podsumowanie {
+      width: 70%;
+      height: 500px;
+      background-color: #4effc4;
+      text-align: center;
+      display: block;
+      margin-top: 20px;
+      float:right;
     }
