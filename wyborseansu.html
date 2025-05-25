@@ -27,101 +27,54 @@
     </div>
   </header>
 
-<main style="display: flex; justify-content: flex-start; align-items: flex-start;">
-    <div id="film" style="flex: 1; max-width: 350px; margin-right: 40px;">
-        <h2>Lorem Ipsum</h2>
-        <img src="zdj1.jpg" alt="Film 1" />
-        <p>Czas trwania: 120 min</p><br />
-        <p>Data premiery: 01.01.2023</p><br />
-    </div>
-    <div style="flex: 1;"></div>
-    <div id="seanse" style="flex: 0 0 350px; margin-left: auto;">
-        <h2>Najbliższe seanse</h2>
-        <p>Poniedziałek</p>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <a href="pick_a_seat.html">
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div></a>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <p>Wtorek</p>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>    
-        <p>Środa</p>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>    
-        <p>Czwartek</p>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>    
-        <p>Piątek</p>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>
-        <div class = "box">
-            <p id="sala">Sala 4</p><br />
-            <p id="godzina">12:30</p><br />
-            <p id="typ">napisy 2D</p><br />
-        </div>   
-        <div id="wszystkie-seanse">
+<main style="display: flex; padding: 20px; gap: 50px;">
+    <section class="left-column" style="flex: 1; max-width: 600px;">
+      <h2>Lorem Ipsum</h2>
+      <img src="zdj1.jpg" alt="Lorem Ipsum" class="movie-poster">
+      <p>Czas trwania: 130 minut</p>
+      <p>Data premiery: 4 kwietnia 2025</p>
+    </section>
 
+    <div class="przerwa" style="flex: 2; max-width: 1000px;"></div>
+    <section class="right-column" style="flex: 3; max-width: 600px;">
+      <h2>Najbliższe seanse</h2>
+      <div class="schedule">
+        <div class="day">
+          <h3>Poniedziałek</h3>
+          <div class="times">
+            <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+            <a href="pick_a_seat.html">
+            <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div></a>
+            <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+          </div>
         </div>
-    </div>
-</main>
+        <div class="day"><h3>Wtorek</h3><div class="times">
+          <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+          <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+          <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+        </div></div>
+
+        <div class="day"><h3>Środa</h3><div class="times">
+          <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+          <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+          <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+        </div></div>
+
+        <div class="day"><h3>Czwartek</h3><div class="times">
+          <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+          <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+          <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+        </div></div>
+
+        <div class="day"><h3>Piątek</h3><div class="times">
+          <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+          <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+          <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+        </div></div>
+
+        <a class="all-screenings" href="index.html">Wszystkie seanse</a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

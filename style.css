@@ -58,6 +58,56 @@ body {
     padding: 30px 20px;
     font-family: "Inter-Black", sans-serif;
   }
+
+  .left-column img {
+    width: 100%;
+    border: 6px solid #4EFCC5;
+    display:block;
+    margin-bottom: 20px;
+  }
+
+  .day {
+  margin-bottom: 20px;
+}
+
+.day h3 {
+  margin: 5px 0;
+}
+
+.times {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.times div {
+  background-color: #30ffc8;
+  color: black;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  width: 100px;
+}
+
+.times span {
+  display: block;
+  font-size: 12px;
+}
+
+.times strong {
+  font-size: 18px;
+}
+
+.all-screenings {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #30ffc8;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+
+}
   
   h2 {
     font-size: 2rem;
@@ -111,39 +161,8 @@ body {
     text-align: right;
   }
 
-  #seanse {
-    width: 300px;
-    height:500px;
-    padding:10px;
-    margin-top:10px;
-    margin-right: 50px;
-  }
-  .box {
-    width:68px;
-    height:45px;
-    background-color: #4effc4;
-    float:left;
-    padding: 10px 10px 10px 10px;
-    margin: 0px 10px 10px 0px;
-    color: black;
-  }
 
-  #sala {
-    font-size: 10px;
-    text-align: left;
-    margin:0;
-  }
 
-  #godzina {
-    text-align: center;
-    font-size: 16px;
-    margin:0;
-  }
-  #typ {
-    text-align: left;
-    font-size:10px;
-    margin:0;
-  }
 
   #wszystkie-seanse {
 
