@@ -11,14 +11,14 @@
     <div class="top-bar">
       <h1 class="logo">CINEMAX</h1>
       <nav class="top-nav">
-        <span>📍 Szczecin</span>
+        <span>Szczecin</span>
         <a href="#">Logowanie</a>
         <a href="#">Rejestracja</a>
         <a href="#">Szukaj</a>
       </nav>
     </div>
     <div class="menu-bar">
-      <a class="active" href="index.html">Repertuar</a>
+      <a class="active" href="#">Repertuar</a>
       <a href="#">Zapowiedzi</a>
       <a href="#">Bar kinowy</a>
       <a href="#">Szkoły</a>
@@ -26,33 +26,33 @@
       <a href="#">Wydarzenia</a>
     </div>
   </header>
-  <main>
-    <div id="film" style="float:left;">
-        <img src="zdj1.jpg" alt="Film 1" />
-        <p style=>Sala 4</p>
-        <p>12:30</p>
-        <p>napisy 2D</p>
+
+  <main class="checkout-container">
+    <div class="summary-img">
+      <img src="zdj1.jpg" alt="Film" />
     </div>
-    <div id="podsumowanie">
-        <p style="color:black;">Twoje podsumowanie</p>
-          <div id="pods_tekst">
-          <p>2x bilet(C3, C4)</p>
-          <p>Kod QR zostanie przesłany na adres e-mail</p>
-          <input type="text" id="mail" placeholder="podaj swój adres e-mail">
-          <p>Wybierz metodę płatności:</p>
-          <form>
-            <input type="radio" name="Metoda_1" id="met">
-            <label for="met">Metoda 1</label><br>
-            <input type="radio" name="Metoda_2" id="met">
-            <label for="met">Metoda 2</label><br>
-            <input type="radio" name="Metoda_3" id="met">
-            <label for="met">Metoda 3</label>
-            </form>
-            <input type="checkbox" name="check" id="check">
-            <label for="check">Akceptuję regulamin</label>
-            <p>Suma: xx,xx zł</p>
-            <button>PŁACĘ</button>
-          </div>
+    
+    <div class="summary-box">
+      <p class="summary-title">Twoje podsumowanie:</p>
+      <p>2x bilet C3,C4</p>
+      <p>Kod QR zostanie przesłany na adres e-mail</p>
+      <input type="text" placeholder="podaj adres e-mail" class="input-email" />
+
+      <p>Wybierz metodę płatności:</p>
+      <form class="payment-methods">
+        <label><input type="radio" name="payment" /> Metoda 1</label><br>
+        <label><input type="radio" name="payment" /> Metoda 2</label><br>
+        <label><input type="radio" name="payment" /> Metoda 3</label>
+      </form>
+
+      <div class="checkbox-wrapper">
+        <input type="checkbox" id="regulamin" />
+        <label for="regulamin">Akceptuję regulamin</label>
+      </div>
+
+      <p class="summary-price">Suma: xx,xx zł</p>
+      <button class="pay-button">PŁACĘ</button>
     </div>
   </main>
-  </body>
+</body>
+</html>

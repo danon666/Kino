@@ -255,3 +255,62 @@ body {
       margin-top: 20px;
       float:right;
     }
+
+
+    .checkout-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 40px;
+}
+
+.summary-img img {
+  width: 180px;
+  height: auto;
+  border: 4px solid #4effc4;
+}
+
+.summary-box {
+  background-color: #36fdd2;
+  padding: 30px;
+  border-radius: 15px;
+  color: black;
+  font-weight: bold;
+  width: 400px;
+}
+
+.summary-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.input-email {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-weight: normal;
+  font-size: 14px;
+  border: none;
+}
+
+.payment-methods label {
+  display: block;
+  margin: 5px 0;
+}
+
+.checkbox-wrapper {
+  margin: 20px 0;
+}
+
+.summary-price {
+  margin: 20px 0;
+}
+
+.pay-button {
+  background-color: pink;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
