@@ -3,9 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CINEMAX - Grafik pracy</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    
+    <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania pracownikiem</span>
+        <a href="#">Kierownik zmiany</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a href="lista.html">Lista pracowników</a>
+      <a href="dodaj.html">Dodaj pracownika</a>
+      <a class="active" href="grafik.html">Grafik pracy</a>
+    </div>
+  </header>
+
+  
+  <main style="padding: 40px;">
+    <h2>Grafik pracy - <span id="currentMonth">Czerwiec 2025</span></h2>
+
+    <label for="monthSelect">Wybierz miesiąc:</label>
+    <select id="monthSelect" style="margin-bottom: 20px;">
+      <option value="6">Czerwiec 2025</option>
+      <option value="7">Lipiec 2025</option>
+      <option value="8">Sierpień 2025</option>
+    </select>
+
+    <table style="width: 100%; border-collapse: collapse; background-color: #4effc4; color: black;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid black; padding: 10px;">Dzień miesiąca</th>
+          <th style="border: 1px solid black; padding: 10px;">Pracownicy na zmianie</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleTableBody">
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    const daysInMonth = {
+      6: 30,
+      7: 31,
+      8: 31
+    };
+
+    // Wczytaj listę pracowników
+    function getEmployees() {
+      return JSON.parse(localStorage.getItem('employees')) || [];
+    }
+
+    // Wczytaj grafik
+    function getSchedule() {
+      return JSON.parse(localStorage.getItem('schedule')) || {};
+    }
+
+    // Zapisz grafik
+    function saveSchedule(schedule) {
+      localStorage.setItem('schedule', JSON.stringify(schedule));
+    }
+
+    // Funkcja generująca tabelę
+    function generateSchedule(month) {
+      const tableBody = document.getElementById('scheduleTableBody');
+      tableBody.innerHTML = '';
+
+      const numDays = daysInMonth[month] || 30;
+      const employees = getEmployees();
+      const schedule = getSchedule();
+
+      for (let day = 1; day <= numDays; day++) {
+        const dateKey = `2025-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        const assigned = schedule[dateKey] || [];
+
+        const tr = document.createElement('tr');
+
+        const dayCell = document.createElement('td');
+        dayCell.style.border = '1px solid black';
+        dayCell.style.padding = '10px';
+        dayCell.textContent = day;
+
+        const employeesCell = document.createElement('td');
+        employeesCell.style.border = '1px solid black';
+        employeesCell.style.padding = '10px';
+
+        // Checkboxy
+        employees.forEach(name => {
+          const label = document.createElement('label');
+          label.style.marginRight = '10px';
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.checked = assigned.includes(name);
+          checkbox.onchange = () => {
+            const schedule = getSchedule();
+            const assigned = schedule[dateKey] || [];
+
+            if (checkbox.checked) {
+              // Dodaj
+              if (!assigned.includes(name)) {
+                assigned.push(name);
+              }
+            } else {
+              // Usuń
+              const index = assigned.indexOf(name);
+              if (index !== -1) {
+                assigned.splice(index, 1);
+              }
+            }
+
+            schedule[dateKey] = assigned;
+            saveSchedule(schedule);
+          };
+
+          label.appendChild(checkbox);
+          label.appendChild(document.createTextNode(' ' + name));
+          employeesCell.appendChild(label);
+        });
+
+        tr.appendChild(dayCell);
+        tr.appendChild(employeesCell);
+        tableBody.appendChild(tr);
+      }
+    }
+
+    // Obsługa zmiany miesiąca
+    document.getElementById('monthSelect').addEventListener('change', function() {
+      const selectedMonth = this.value;
+      const monthNames = {
+        6: 'Czerwiec 2025',
+        7: 'Lipiec 2025',
+        8: 'Sierpień 2025'
+      };
+      document.getElementById('currentMonth').textContent = monthNames[selectedMonth] || 'Miesiąc';
+      generateSchedule(selectedMonth);
+    });
+
+    generateSchedule(6);
+  </script>
+
 </body>
 </html>

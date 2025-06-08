@@ -16,8 +16,8 @@
       </nav>
     </div>
     <div class="menu-bar">
-      <a href="index.html">Strona główna</a>  
-      <a class="active" href="lista.html">Lista pracowników</a>
+      <a class ="active" href="index.html">Strona główna</a>  
+      <a href="lista.html">Lista pracowników</a>
       <a href="dodaj.html">Dodaj pracownika</a>
       <a href="grafik.html">Grafik pracy</a>
     </div>
@@ -37,11 +37,14 @@
 
 </main>
 <script>
-  const employees = JSON.parse(localStorage.getItem('employees')) || [];
 
-  const listElement = document.getElementById('employeeList');
 
-  employees.forEach(name => {
+    const todayEmployees = JSON.parse(localStorage.getItem('todayEmployees')) || [];
+    const listElement = document.getElementById('employeeList');
+
+
+    //Dodawanie każdego pracownika jako <li>
+    todayEmployees.forEach(name => {
     const li = document.createElement('li');
     li.textContent = name;
     listElement.appendChild(li);

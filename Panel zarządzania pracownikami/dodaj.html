@@ -17,7 +17,7 @@
     </div>
     <div class="menu-bar">
       <a href="index.html">Strona główna</a>
-      <a class="active" href="lista.html">Lista pracowników</a>  
+      <a href="lista.html">Lista pracowników</a>  
       <a class="active" href="dodaj.html">Dodaj pracownika</a>
       <a href="grafik.html">Grafik pracy</a>
     </div>
@@ -35,7 +35,7 @@
 
 
   <script>
-    document.getElementById('addEmployeeForm').addEventListener('submit', function(e) {
+      document.getElementById('addEmployeeForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
       const name = document.getElementById('employeeName').value.trim();
