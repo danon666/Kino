@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CINEMAX - Zarządzanie Pracownikami</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania pracownikiem</span>
+        <a href="#">Kierownik zmiany</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a class="active" href="lista.html">Lista pracowników</a>
+      <a href="dodaj.html">Dodaj pracownika</a>
+      <a href="grafik.html">Grafik pracy</a>
+    </div>
+  </header>
+
+  <main style="display: flex; gap: 40px; padding: 20px;">
+  <section id="right">
+    <h2 style="margin-top: 0;">Pracownicy na dzisiejszej zmianie</h2>
+    <ul id="employeeList" style="list-style-type: disc; padding-left: 20px; font-weight: bold;">
+
+    </ul>
+  </section>
+
+  <section id="left">
+    do końca zmiany pozostało: XX:XX:XX
+  </section>
+
+</main>
+<script>
+  const employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+  const listElement = document.getElementById('employeeList');
+
+  employees.forEach(name => {
+    const li = document.createElement('li');
+    li.textContent = name;
+    listElement.appendChild(li);
+  });
+</script>
+</body>
+</html>

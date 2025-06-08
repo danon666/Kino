@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CINEMAX - Lista pracowników</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania pracownikiem</span>
+        <a href="#">Kierownik zmiany</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a class="active" href="lista.html">Lista pracowników</a>
+      <a href="dodaj.html">Dodaj pracownika</a>
+      <a href="grafik.html">Grafik pracy</a>
+    </div>
+  </header>
+
+  <main style="padding: 40px;">
+    <h2>Lista wszystkich pracowników</h2>
+    <ul id="employeeList" style="list-style-type: none; padding-left: 0;">
+
+    </ul>
+  </main>
+
+  <script>
+    // Odśwież listę pracowników
+    function renderEmployeeList() {
+      const employees = JSON.parse(localStorage.getItem('employees')) || [];
+      const todayEmployees = JSON.parse(localStorage.getItem('todayEmployees')) || [];
+
+      const listElement = document.getElementById('employeeList');
+      listElement.innerHTML = '';
+
+      employees.forEach((name, index) => {
+        const li = document.createElement('li');
+        li.style.marginBottom = '10px';
+        li.style.padding = '10px';
+        li.style.backgroundColor = '#4effc4';
+        li.style.color = 'black';
+        li.style.borderRadius = '8px';
+        li.style.display = 'flex';
+        li.style.justifyContent = 'space-between';
+        li.style.alignItems = 'center';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = name;
+        nameSpan.style.flexGrow = '1';
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edytuj';
+        editButton.style.marginRight = '10px';
+        editButton.onclick = () => editEmployee(index, nameSpan);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Usuń';
+        deleteButton.style.marginRight = '10px';
+        deleteButton.onclick = () => deleteEmployee(index);
+
+        const toggleTodayButton = document.createElement('button');
+        const isToday = todayEmployees.includes(name);
+        toggleTodayButton.textContent = isToday ? 'Usuń z dzisiejszej zmiany' : 'Dodaj do dzisiejszej zmiany';
+        toggleTodayButton.onclick = () => toggleTodayEmployee(name);
+
+        li.appendChild(nameSpan);
+        li.appendChild(editButton);
+        li.appendChild(deleteButton);
+        li.appendChild(toggleTodayButton);
+
+        listElement.appendChild(li);
+      });
+    }
+
+    // Usuwanie pracownika
+    function deleteEmployee(index) {
+      const employees = JSON.parse(localStorage.getItem('employees')) || [];
+      const todayEmployees = JSON.parse(localStorage.getItem('todayEmployees')) || [];
+
+      const removedEmployee = employees[index];
+      employees.splice(index, 1);
+
+      const todayIndex = todayEmployees.indexOf(removedEmployee);
+      if (todayIndex !== -1) {
+        todayEmployees.splice(todayIndex, 1);
+      }
+
+      localStorage.setItem('employees', JSON.stringify(employees));
+      localStorage.setItem('todayEmployees', JSON.stringify(todayEmployees));
+      renderEmployeeList();
+    }
+
+    // Edytuj pracownika
+    function editEmployee(index, nameSpan) {
+      const currentName = nameSpan.textContent;
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = currentName;
+      input.style.width = '60%';
+      input.style.marginRight = '10px';
+
+      const saveButton = document.createElement('button');
+      saveButton.textContent = 'Zapisz';
+      saveButton.onclick = () => {
+        const newName = input.value.trim();
+        if (newName === "") return;
+
+        const employees = JSON.parse(localStorage.getItem('employees')) || [];
+        const todayEmployees = JSON.parse(localStorage.getItem('todayEmployees')) || [];
+
+        employees[index] = newName;
+
+        const todayIndex = todayEmployees.indexOf(currentName);
+        if (todayIndex !== -1) {
+          todayEmployees[todayIndex] = newName;
+        }
+
+        localStorage.setItem('employees', JSON.stringify(employees));
+        localStorage.setItem('todayEmployees', JSON.stringify(todayEmployees));
+        renderEmployeeList();
+      };
+
+      const parentLi = nameSpan.parentElement;
+      parentLi.innerHTML = '';
+      parentLi.appendChild(input);
+      parentLi.appendChild(saveButton);
+    }
+
+    // Dodaj/usuń z dzisiejszej zmiany
+    function toggleTodayEmployee(name) {
+      const todayEmployees = JSON.parse(localStorage.getItem('todayEmployees')) || [];
+      const index = todayEmployees.indexOf(name);
+
+      if (index === -1) {
+        todayEmployees.push(name);
+      } else {
+        todayEmployees.splice(index, 1);
+      }
+
+      localStorage.setItem('todayEmployees', JSON.stringify(todayEmployees));
+      renderEmployeeList(); 
+    }
+
+    renderEmployeeList();
+  </script>
+</body>
+</html>

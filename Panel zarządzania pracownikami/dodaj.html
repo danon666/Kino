@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CINEMAX - Dodaj pracownika</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania pracownikiem</span>
+        <a href="#">Kierownik zmiany</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>
+      <a class="active" href="lista.html">Lista pracowników</a>  
+      <a class="active" href="dodaj.html">Dodaj pracownika</a>
+      <a href="grafik.html">Grafik pracy</a>
+    </div>
+  </header>
+
+  <main style="padding: 40px; background-color: #4effc4; max-width: 600px; margin: 40px auto; border-radius: 15px; color: black; font-family: Arial, sans-serif;">
+  <h2>Dodaj pracownika</h2>
+  <form id="addEmployeeForm">
+    <label for="employeeName">Imię pracownika:</label><br>
+    <input type="text" id="employeeName" name="employeeName" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+    <button type="submit" style="padding: 10px 20px; font-weight: bold;">Dodaj</button>
+  </form>
+  <p id="message" style="color: green; font-weight: bold; margin-top: 20px;"></p>
+</main>
+
+
+  <script>
+    document.getElementById('addEmployeeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('employeeName').value.trim();
+      if (name === "") return;
+
+      const employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+      employees.push(name);
+
+      localStorage.setItem('employees', JSON.stringify(employees));
+
+      document.getElementById('message').textContent = "Dodano pracownika: " + name;
+
+      document.getElementById('employeeName').value = "";
+    });
+  </script>
+</body>
+</html>
