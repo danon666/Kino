@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CINEMAX</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>📍 Szczecin</span>
+        <a href="#">Logowanie</a>
+        <a href="#">Rejestracja</a>
+        <a href="#">Szukaj</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a class="active" href="index.html">Repertuar</a>
+      <a href="#">Zapowiedzi</a>
+      <a href="#">Bar kinowy</a>
+      <a href="#">Szkoły</a>
+      <a href="#">Rodziny</a>
+      <a href="#">Wydarzenia</a>
+    </div>
+  </header>
+
+<main style="display: flex; padding: 20px; gap: 50px;">
+    <section class="left-column" style="flex: 1; max-width: 600px;">
+      <h2 id="film-title">Film</h2>
+      <img id="film-img" src="" alt="Film" class="movie-poster">
+      <p id="film-duration">Czas trwania: ...</p>
+      <p id="film-premiere">Data premiery: ...</p>
+    </section>
+
+    <div class="przerwa" style="flex: 2; max-width: 1000px;"></div>
+    <section class="right-column" style="flex: 3; max-width: 600px;">
+      <h2>Najbliższe seanse</h2>
+      <div class="schedule">
+        <div class="day">
+          <h3>Poniedziałek</h3>
+          <div class="times">
+             
+            <a class="seat-link" data-sala="4" data-godzina="12:30" href="#">
+             <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="8" data-godzina="15:30" href="#">
+            <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="1" data-godzina="18:30" href="#">
+            <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+            </a>
+            
+          </div>
+        </div>
+        <div class="day">
+          <h3>Wtorek</h3>
+          <div class="times">
+             
+            <a class="seat-link" data-sala="4" data-godzina="12:30" href="#">
+             <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="8" data-godzina="15:30" href="#">
+            <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="1" data-godzina="18:30" href="#">
+            <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+            </a>
+            
+          </div>
+        </div>
+
+        <div class="day">
+          <h3>Środa</h3>
+          <div class="times">
+             
+            <a class="seat-link" data-sala="4" data-godzina="12:30" href="#">
+             <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="8" data-godzina="15:30" href="#">
+            <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="1" data-godzina="18:30" href="#">
+            <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+            </a>
+            
+          </div>
+        </div>
+        <div class="day">
+          <h3>Czwartek</h3>
+          <div class="times">
+             
+            <a class="seat-link" data-sala="4" data-godzina="12:30" href="#">
+             <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="8" data-godzina="15:30" href="#">
+            <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="1" data-godzina="18:30" href="#">
+            <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+            </a>
+            
+          </div>
+        </div>
+
+        <div class="day">
+          <h3>Piątek</h3>
+          <div class="times">
+             
+            <a class="seat-link" data-sala="4" data-godzina="12:30" href="#">
+             <div><span>sala 4</span><strong>12:30</strong><span>napisy 2D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="8" data-godzina="15:30" href="#">
+            <div><span>sala 8</span><strong>15:30</strong><span>dubbing 3D</span></div>
+            </a>
+
+            <a class="seat-link" data-sala="1" data-godzina="18:30" href="#">
+            <div><span>sala 1</span><strong>18:30</strong><span>napisy 2D</span></div>
+            </a>
+            
+          </div>
+        </div>
+
+        <a class="all-screenings" href="index.html">Wszystkie seanse</a>
+      </div>
+    </section>
+  </main>
+   <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const films = {
+      1: {
+        title: "Lorem Ipsum",
+        img: "zdj1.jpg",
+        duration: "130 minut",
+        premiere: "4 kwietnia 2025"
+      },
+      2: {
+        title: "Film 2",
+        img: "zdj2.png",
+        duration: "110 minut",
+        premiere: "15 marca 2025"
+      },
+      3: {
+        title: "Film 3",
+        img: "zdj3.jpg",
+        duration: "95 minut",
+        premiere: "22 lutego 2025"
+      },
+      4: {
+        title: "Film 4",
+        img: "zdj4.png",
+        duration: "125 minut",
+        premiere: "10 maja 2025"
+      }
+    };
+
+    const filmId = getQueryParam('id');
+    const film = films[filmId];
+
+    // Jeśli znaleziono film, ustaw dane na stronie
+    if (film) {
+      document.getElementById('film-title').textContent = film.title;
+      document.getElementById('film-img').src = film.img;
+      document.getElementById('film-img').alt = film.title;
+      document.getElementById('film-duration').textContent = "Czas trwania: " + film.duration;
+      document.getElementById('film-premiere').textContent = "Data premiery: " + film.premiere;
+    } else {
+      document.getElementById('film-title').textContent = "Nie znaleziono filmu";
+      document.getElementById('film-img').style.display = 'none';
+      document.getElementById('film-duration').textContent = "";
+      document.getElementById('film-premiere').textContent = "";
+    }
+    document.querySelectorAll('.seat-link').forEach(link => {
+  const sala = link.getAttribute('data-sala');
+  const godzina = link.getAttribute('data-godzina');
+  link.href = `pick_a_seat.html?id=${filmId}&sala=${encodeURIComponent(sala)}&godzina=${encodeURIComponent(godzina)}`;
+  });
+  </script>
+</body>
+</html>

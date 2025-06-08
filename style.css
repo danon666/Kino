@@ -314,3 +314,9 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+
+.seat.selected {
+    background: #4effc4;
+    border-color: #0288d1;
+    color: black;
+}

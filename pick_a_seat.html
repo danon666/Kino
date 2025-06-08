@@ -29,9 +29,9 @@
 
   <main>
     <div id="film"  style="float:left; margin-right: 250px;">
-        <img style ="width:200px;"src="zdj1.jpg" alt="Film 1" />
-        <p style=>Sala 4</p>
-        <p>12:30</p>
+        <img id="film-img" style ="width:200px;" src="" alt="Film" />
+        <p id="film-sala">Sala 4</p>
+        <p id="film-godzina">12:30</p>
         <p>napisy 2D</p>
         <div id="change_date">
             <p style="color:black;">Zmień datę i godzinę</p>
@@ -199,4 +199,70 @@
     </div>
     </a>
   </main>
+
+    <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const films = {
+      1: {
+        img: "zdj1.jpg"
+      },
+      2: {
+        img: "zdj2.png"
+      },
+      3: {
+        img: "zdj3.jpg"
+      },
+      4: {
+        img: "zdj4.png"
+      }
+    };
+
+    const filmId = getQueryParam('id');
+    const sala = getQueryParam('sala');
+    const godzina = getQueryParam('godzina');
+
+    const film = films[filmId];
+
+    // Ustawienie obrazu filmu i informacji o sali i godzinie
+    if (film) {
+      document.getElementById('film-img').src = film.img;
+    }
+    document.getElementById('film-sala').textContent = "Sala: " + sala;
+    document.getElementById('film-godzina').textContent = "Godzina: " + godzina;
+
+    // Obsługa wyboru miejsc
+    document.querySelectorAll('.seat').forEach(seat => {
+      seat.addEventListener('click', (e) => {
+        e.preventDefault();
+        seat.classList.toggle('selected');
+        updateSelectedSeats();
+      });
+    });
+
+    function updateSelectedSeats() {
+      const selectedSeats = Array.from(document.querySelectorAll('.seat.selected'))
+        .map(seat => {
+          const row = seat.closest('tr').querySelector('.row-label').textContent;
+          const number = seat.textContent;
+          return row + number;
+        });
+
+      const summaryElement = document.querySelector('#buy-tickets p:nth-of-type(2)');
+      if (selectedSeats.length > 0) {
+        summaryElement.textContent = 'Wybrane miejsca: ' + selectedSeats.join(', ');
+      } else {
+        summaryElement.textContent = 'Wybrane miejsca:';
+      }
+
+      localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+      localStorage.setItem('filmSala', sala);
+      localStorage.setItem('filmGodzina', godzina);
+      localStorage.setItem('filmId', filmId);
+    }
+  </script>
   </body>
+  </html>

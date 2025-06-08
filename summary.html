@@ -54,5 +54,39 @@
       <button class="pay-button">PŁACĘ</button>
     </div>
   </main>
+  <script>
+  const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
+  const numberOfTickets = selectedSeats.length;
+  const filmId = localStorage.getItem('filmId');
+
+  const films = {
+    1: {
+      img: "zdj1.jpg"
+    },
+    2: {
+      img: "zdj2.png"
+    },
+    3: {
+      img: "zdj3.jpg"
+    },
+    4: {
+      img: "zdj4.png"
+    }
+  };
+
+  // Ustawianie opisu wybranych miejsc
+  const summaryParagraph = document.querySelector('.summary-box p:nth-of-type(2)');
+  if (numberOfTickets > 0) {
+    summaryParagraph.textContent = numberOfTickets + 'x bilet ' + selectedSeats.join(', ');
+  } else {
+    summaryParagraph.textContent = 'Brak wybranych miejsc';
+  }
+
+  // Ustawianie zdjęcia filmu
+  const film = films[filmId];
+  if (film) {
+    document.querySelector('.summary-img img').src = film.img;
+  }
+</script>
 </body>
 </html>
