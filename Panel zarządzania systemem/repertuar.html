@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel zarządzania - Repertuar</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    main {
+      padding: 20px;
+    }
+    .film-card {
+      background-color: #4effc4;
+      color: black;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    .film-card h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+    .film-card p {
+      margin: 0 0 10px;
+    }
+    .film-card button {
+      margin-right: 10px;
+      padding: 5px 10px;
+      background-color: black;
+      color: #4effc4;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .film-card button:hover {
+      background-color: #33ddbb;
+    }
+    .add-film-button {
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      background-color: black;
+      color: #4effc4;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .add-film-button:hover {
+      background-color: #33ddbb;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania systemem</span>
+        <a href="#">Admin</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a class="active" href="repertuar.html">Repertuar</a>
+      <a href="system.html">System</a>
+      <a href="uztykownicy.html">Użytkownicy</a>
+      <a href="operacje.html">Operacje</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Repertuar filmów</h2>
+    <button class="add-film-button" id="addFilmBtn">Dodaj film</button>
+    <div id="filmList"></div>
+  </main>
+
+  <script>
+    // Pobierz filmy z localStorage lub ustaw domyślne
+    let films = JSON.parse(localStorage.getItem('films')) || [
+      { title: "Film 1", description: "Opis filmu 1" },
+      { title: "Film 2", description: "Opis filmu 2" }
+    ];
+
+    function renderFilms() {
+      const filmList = document.getElementById('filmList');
+      filmList.innerHTML = '';
+
+      films.forEach((film, index) => {
+        const card = document.createElement('div');
+        card.className = 'film-card';
+
+        const title = document.createElement('h3');
+        title.textContent = film.title;
+
+        const description = document.createElement('p');
+        description.textContent = film.description;
+
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edytuj opis';
+        editBtn.onclick = () => editDescription(index);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Usuń film';
+        deleteBtn.onclick = () => deleteFilm(index);
+
+        card.appendChild(title);
+        card.appendChild(description);
+        card.appendChild(editBtn);
+        card.appendChild(deleteBtn);
+
+        filmList.appendChild(card);
+      });
+    }
+
+    function addFilm() {
+      const title = prompt('Podaj tytuł nowego filmu:');
+      if (title) {
+        const description = prompt('Podaj opis filmu:') || '';
+        films.push({ title, description });
+        saveFilms();
+        renderFilms();
+      }
+    }
+
+    function editDescription(index) {
+      const newDescription = prompt('Podaj nowy opis filmu:', films[index].description);
+      if (newDescription !== null) {
+        films[index].description = newDescription;
+        saveFilms();
+        renderFilms();
+      }
+    }
+
+    function deleteFilm(index) {
+      if (confirm(`Czy na pewno chcesz usunąć film "${films[index].title}"?`)) {
+        films.splice(index, 1);
+        saveFilms();
+        renderFilms();
+      }
+    }
+
+    function saveFilms() {
+      localStorage.setItem('films', JSON.stringify(films));
+    }
+
+    document.getElementById('addFilmBtn').addEventListener('click', addFilm);
+
+    renderFilms();
+  </script>
+</body>
+</html>

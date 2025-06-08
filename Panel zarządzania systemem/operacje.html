@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel operacji systemowych</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    main {
+      padding: 40px;
+    }
+
+    h2 {
+      color: #4effc4;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #4effc4;
+      color: black;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid black;
+      text-align: left;
+    }
+
+    th {
+      background-color: #36fdd2;
+    }
+
+    .refresh-button {
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      background-color: black;
+      color: #4effc4;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .refresh-button:hover {
+      background-color: #33ddbb;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania systemem</span>
+        <a href="#">Admin</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a href="repertuar.html">Repertuar</a>
+      <a href="system.html">System</a>
+      <a href="uzytkownicy.html">Użytkownicy</a>
+      <a class="active" href="operacje.html">Operacje</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Logi systemowe</h2>
+    <button class="refresh-button" onclick="loadLogs()">Odśwież logi</button>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Użytkownik</th>
+          <th>Opis</th>
+        </tr>
+      </thead>
+      <tbody id="logsTableBody">
+        <!-- Logi wstawiane dynamicznie -->
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    // Przykładowe logi
+    let logs = JSON.parse(localStorage.getItem('systemLogs')) || [
+      { date: '2025-06-08 10:00', user: 'admin', description: 'Zalogowano do systemu' },
+      { date: '2025-06-08 10:15', user: 'kasjer', description: 'Zaktualizowano repertuar' },
+      { date: '2025-06-08 10:30', user: 'technik', description: 'Przeprowadzono backup' }
+    ];
+
+    function loadLogs() {
+      const tableBody = document.getElementById('logsTableBody');
+      tableBody.innerHTML = '';
+
+      logs.forEach(log => {
+        const row = document.createElement('tr');
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = log.date;
+        row.appendChild(dateCell);
+
+        const userCell = document.createElement('td');
+        userCell.textContent = log.user;
+        row.appendChild(userCell);
+
+        const descCell = document.createElement('td');
+        descCell.textContent = log.description;
+        row.appendChild(descCell);
+
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Wczytaj logi przy starcie
+    loadLogs();
+  </script>
+</body>
+</html>

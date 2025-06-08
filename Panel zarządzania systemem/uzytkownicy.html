@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel użytkowników</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    main {
+      padding: 40px;
+    }
+
+    .user-card {
+      background-color: #4effc4;
+      color: black;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-card span {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .user-card button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      background-color: black;
+      color: #4effc4;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .user-card button:hover {
+      background-color: #33ddbb;
+    }
+
+    .add-user-button {
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      background-color: black;
+      color: #4effc4;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .add-user-button:hover {
+      background-color: #33ddbb;
+    }
+
+    h2 {
+      color: #4effc4;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania systemem</span>
+        <a href="#">Admin</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a href="repertuar.html">Repertuar</a>
+      <a href="system.html">System</a>
+      <a class="active" href="uzytkownicy.html">Użytkownicy</a>
+      <a href="operacje.html">Operacje</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Lista użytkowników</h2>
+    <button class="add-user-button" id="addUserBtn">Dodaj użytkownika</button>
+    <div id="userList"></div>
+  </main>
+
+  <script>
+    let users = JSON.parse(localStorage.getItem('users')) || [
+      "admin",
+      "kasjer",
+      "technik"
+    ];
+
+    function renderUsers() {
+      const userList = document.getElementById('userList');
+      userList.innerHTML = '';
+
+      users.forEach((user, index) => {
+        const card = document.createElement('div');
+        card.className = 'user-card';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = user;
+
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edytuj';
+        editBtn.onclick = () => editUser(index);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Usuń';
+        deleteBtn.onclick = () => deleteUser(index);
+
+        card.appendChild(nameSpan);
+        card.appendChild(editBtn);
+        card.appendChild(deleteBtn);
+
+        userList.appendChild(card);
+      });
+    }
+
+    function addUser() {
+      const username = prompt('Podaj nazwę nowego użytkownika:');
+      if (username) {
+        users.push(username);
+        saveUsers();
+        renderUsers();
+      }
+    }
+
+    function editUser(index) {
+      const newUsername = prompt('Podaj nową nazwę użytkownika:', users[index]);
+      if (newUsername !== null) {
+        users[index] = newUsername;
+        saveUsers();
+        renderUsers();
+      }
+    }
+
+    function deleteUser(index) {
+      if (confirm(`Czy na pewno chcesz usunąć użytkownika "${users[index]}"?`)) {
+        users.splice(index, 1);
+        saveUsers();
+        renderUsers();
+      }
+    }
+
+    function saveUsers() {
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    document.getElementById('addUserBtn').addEventListener('click', addUser);
+
+    renderUsers();
+  </script>
+</body>
+</html>
