@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CINEMAX - Przegląd zasobów</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <h1 class="logo">CINEMAX</h1>
+            <nav class="top-nav">
+                <span>Panel zarządzania magazynem</span>
+                <a href="#">Magazynier</a>
+            </nav>
+        </div>
+        <div class="menu-bar">
+            <a href="index.html">Strona główna</a>
+            <a class="active" href="przeglad.html">Przegląd zasobów</a>
+            <a href="dostawa.html">Nowa dostawa</a>
+            <a href="zuzycie.html">Zużycie produktów</a>
+            <a href="alarmy.html">Alarmy</a>
+        </div>
+    </header>
+
+    <main style="padding: 40px;">
+        <h2>Przegląd zasobów magazynowych</h2>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="background-color: #4effc4; color: black;">
+                    <th class="table" >Produkt</th>
+                    <th class="table">Stan magazynowy</th>
+                    <th class="table">Jednostka</th>
+                    <th class="table">Minimum wymagane</th>
+                    <th class="table">Status</th>
+                </tr>
+            </thead>
+            <tbody id="magazynTableBody">
+                <tr class="ok-stock">
+                    <td class="table">Popcorn</td>
+                    <td class="table">120</td>
+                    <td class="table">kg</td>
+                    <td class="table">100</td>
+                    <td class="table">OK</td>
+                </tr>
+                <tr class="ok-stock">
+                    <td class="table">Napoje gazowane</td>
+                    <td class="table">180</td>
+                    <td class="table">l</td>
+                    <td class="table">150</td>
+                    <td class="table">OK</td>
+                </tr>
+                <tr class="low-stock">
+                    <td class="table">Cukierki</td>
+                    <td class="table">30</td>
+                    <td class="table">kg</td>
+                    <td class="table">50</td>
+                    <td class="table">Niski poziom</td>
+                </tr>
+                <tr class="ok-stock">
+                    <td class="table">Nachosy</td>
+                    <td class="table">200</td>
+                    <td class="table">kg</td>
+                    <td class="table">100</td>
+                    <td class="table">OK</td>
+                </tr>
+                <tr class="low-stock">
+                    <td class="table">Ser do nachosów</td>
+                    <td class="table">10</td>
+                    <td class="table">kg</td>
+                    <td class="table">25</td>
+                    <td class="table">Niski poziom</td>
+                </tr>
+                <tr class="ok-stock">
+                    <td class="table">Kubki papierowe</td>
+                    <td class="table">1500</td>
+                    <td class="table">szt.</td>
+                    <td class="table">1000</td>
+                    <td class="table">OK</td>
+                </tr>
+                <tr class="low-stock">
+                    <td class="table">Słomki</td>
+                    <td class="table">200</td>
+                    <td class="table">szt.</td>
+                    <td class="table">500</td>
+                    <td class="table">Brak</td>
+                </tr>
+                <tr class="ok-stock">
+                    <td class="table">Opakowania na popcorn</td>
+                    <td class="table">800</td>
+                    <td class="table">szt.</td>
+                    <td class="table">500</td>
+                    <td class="table">OK</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <script>
+        if (!localStorage.getItem('magazyn')) {
+            const initialMagazyn = [
+                { produkt: "Popcorn", stan: 120, jednostka: "kg", minimum: 100 },
+                { produkt: "Napoje gazowane", stan: 180, jednostka: "l", minimum: 150 },
+                { produkt: "Cukierki", stan: 30, jednostka: "kg", minimum: 50 },
+                { produkt: "Nachosy", stan: 200, jednostka: "kg", minimum: 100 },
+                { produkt: "Ser do nachosów", stan: 10, jednostka: "kg", minimum: 25 },
+                { produkt: "Kubki papierowe", stan: 1500, jednostka: "szt.", minimum: 1000 },
+                { produkt: "Słomki", stan: 200, jednostka: "szt.", minimum: 500 },
+                { produkt: "Opakowania na popcorn", stan: 800, jednostka: "szt.", minimum: 500 }
+            ];
+            localStorage.setItem('magazyn', JSON.stringify(initialMagazyn));
+        }
+
+        // Funkcja wyświetlająca tabelę magazynową
+        function renderMagazyn() {
+    const magazyn = JSON.parse(localStorage.getItem('magazyn')) || [];
+    const tableBody = document.getElementById('magazynTableBody');
+    tableBody.innerHTML = '';
+
+    magazyn.forEach((item, index) => {
+      const tr = document.createElement('tr');
+
+      // Wyliczamy status
+      let statusText = "OK";
+      let rowClass = "ok-stock";
+
+      if (item.stan === 0) {
+        statusText = "Brak";
+        rowClass = "low-stock";
+      } else if (item.stan < item.minimum) {
+        statusText = "Niski poziom";
+        rowClass = "low-stock";
+      }
+
+      tr.className = rowClass;
+
+      // Tworzymy input dla pola "Stan"
+      const stanInput = document.createElement('input');
+      stanInput.type = 'number';
+      stanInput.value = item.stan;
+      stanInput.style.width = '80px';
+      stanInput.style.padding = '5px';
+
+      // Obsługa zmiany wartości
+      stanInput.addEventListener('change', () => {
+        const newStan = parseInt(stanInput.value);
+        if (!isNaN(newStan)) {
+          item.stan = newStan;
+          magazyn[index] = item;
+          localStorage.setItem('magazyn', JSON.stringify(magazyn));
+          renderMagazyn(); // odśwież tabelę (status się przeliczy)
+        }
+      });
+
+      // Składamy wiersz
+      tr.innerHTML = `
+        <td style="border: 1px solid black; padding: 10px;">${item.produkt}</td>
+        <td style="border: 1px solid black; padding: 10px;"></td> <!-- tu wstawimy input -->
+        <td style="border: 1px solid black; padding: 10px;">${item.jednostka}</td>
+        <td style="border: 1px solid black; padding: 10px;">${item.minimum}</td>
+        <td style="border: 1px solid black; padding: 10px;">${statusText}</td>
+      `;
+
+      // Wstawiamy input do komórki "Stan"
+      tr.children[1].appendChild(stanInput);
+
+      tableBody.appendChild(tr);
+    });
+  }
+        renderMagazyn();
+    </script>
+</body>
+</html>

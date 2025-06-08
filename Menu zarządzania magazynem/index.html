@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINEMAX - Magazyn</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+    <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania magazynem</span>
+        <a href="#">Magazynier</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a class="active" href="index.html">Strona główna</a>
+      <a href="przeglad.html">Przegląd zasobów</a>
+      <a href="dostawa.html">Nowa dostawa</a>
+      <a href="zuzycie.html">Zużycie produktów</a>
+      <a href="alarmy.html">Alarmy</a>
+    </div>
+  </header>
+  <main style="display: flex; gap: 40px; padding: 40px;">
+
+    <section style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      
+      <div style="background-color: #4effc4; padding: 20px; border-radius: 10px; color: black; font-family: Arial, sans-serif;">
+        <h2>Lista produktów</h2>
+        <ul style="list-style-type: disc; padding-left: 20px; font-weight: bold;">
+          <li>Popcorn</li>
+          <li>Napoje gazowane</li>
+          <li>Cukierki</li>
+          <li>Nachosy</li>
+          <li>Ser do nachosów</li>
+        </ul>
+      </div>
+
+      <div style="background-color: #4effc4; padding: 20px; border-radius: 10px; color: black; font-family: Arial, sans-serif;">
+        <h2>Nadchodzące dostawy</h2>
+        <ul id="dostawyList" style="list-style-type: disc; padding-left: 20px; font-weight: bold;">
+
+        </ul>
+      </div>
+
+    </section>
+
+    <section style="flex: 2; background-color: #4effc4; padding: 20px; border-radius: 10px; color: black; font-family: Arial, sans-serif;">
+      <h2>Zużycie produktów</h2>
+      <table style="width: 100%; border-collapse: collapse;text-align: center;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid black; padding: 10px;">Produkt</th>
+            <th style="border: 1px solid black; padding: 10px;">Zużycie w tym miesiącu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid black; padding: 10px;">Popcorn</td>
+            <td style="border: 1px solid black; padding: 10px;">150 kg</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; padding: 10px;">Napoje gazowane</td>
+            <td style="border: 1px solid black; padding: 10px;">320 l</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; padding: 10px;">Cukierki</td>
+            <td style="border: 1px solid black; padding: 10px;">80 kg</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; padding: 10px;">Nachosy</td>
+            <td style="border: 1px solid black; padding: 10px;">100 kg</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; padding: 10px;">Ser do nachosów</td>
+            <td style="border: 1px solid black; padding: 10px;">40 kg</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <script>
+    const dostawy = JSON.parse(localStorage.getItem('dostawy')) || [];
+    const listElement = document.getElementById('dostawyList');
+
+    dostawy.forEach(d => {
+        const li = document.createElement('li');
+        li.textContent = `${d.produkt} - ${d.ilosc} szt. - ${d.data}`;
+        listElement.appendChild(li);
+    });
+</script>
+</body>
+</html>

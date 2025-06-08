@@ -57,7 +57,15 @@ body {
   main {
     padding: 30px 20px;
     font-family: "Inter-Black", sans-serif;
+  
   }
+
+
+.left-column{
+  flex: 1;
+  max-width: 600px;  
+}
+
 
   .left-column img {
     width: 100%;
@@ -143,9 +151,11 @@ body {
     width: 300px;
     margin: 10px;
     text-align: left;
+    float:left; 
+    margin-right: 250px;
   }
   #film img {
-    width: 100%;
+    width: 200px;
     height: 100%;
     border: 6px solid #4EFCC5;
     display:block;
@@ -161,12 +171,11 @@ body {
     text-align: right;
   }
 
-
-
-
-  #wszystkie-seanse {
-
-  }
+#seans {
+  display: flex; 
+  padding: 20px; 
+  gap: 50px;
+}
 
   #change_date{
     background-color: #4effc4;
@@ -181,6 +190,8 @@ body {
         align-items: center;
         margin-top: 40px;
         margin-right: 40px;
+        float:left;
+        margin-bottom: 20px;
     }
     .screen {
         background: linear-gradient(to bottom, #eee 80%, #ccc 100%);
@@ -237,13 +248,14 @@ body {
     }
 
     #buy-tickets {
-      width: 45%;
+      width: 35%;
       height: 100px;
       background-color: #4effc4;
       text-align: center;
       display: block;
       padding-bottom: 20px;
       margin-bottom: 20px;
+      float:left;
     }
 
     #podsumowanie {
@@ -342,4 +354,70 @@ body {
   justify-content: center; 
   font-size: 1.5rem; 
   font-weight: bold;
+}
+
+.low-stock {
+            background-color: #ff6b6b; 
+            color: white;
+            font-weight: bold;
+        }
+.ok-stock {
+            background-color: #4effc4; 
+            color: black;
+        }
+
+.przerwa {
+  flex: 2;
+  max-width: 1000px;
+}
+
+.right-column {
+  flex: 3; 
+  max-width: 600px;
+}
+
+#dodaj {
+  padding: 40px; 
+  background-color: #4effc4; 
+  max-width: 600px; 
+  margin: 40px auto;
+  border-radius: 15px; 
+  color: black; 
+  font-family: Arial, sans-serif;
+}
+
+#bd {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #4effc4; 
+  color: black;
+}
+
+#alarmy {
+  width: 100%; 
+  border-collapse: collapse; 
+  margin-top: 20px;
+}
+
+#message {
+  color: green; 
+  font-weight: bold; 
+  margin-top: 20px;
+}
+
+#produkt {
+  width: 100%; 
+  padding: 10px; 
+  margin-bottom: 10px;
+}
+
+#form {
+width: 100%; 
+padding: 10px; 
+margin-bottom: 10px;
+}
+
+#table {
+  border: 1px solid black; 
+  padding: 10px;
 }

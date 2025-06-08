@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINEMAX - Alarmy progowe</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+    <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania magazynem</span>
+        <a href="#">Magazynier</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>
+      <a href="przeglad.html">Przegląd zasobów</a>
+      <a href="dostawa.html">Nowa dostawa</a>
+      <a href="zuzycie.html">Zużycie produktów</a>
+      <a class="active" href="alarmy.html">Alarmy</a>
+    </div>
+  </header>
+
+  <main style="padding: 40px;">
+    <h2>Konfiguracja alarmów progowych</h2>
+    <table id="alarmy">
+      <thead>
+        <tr style="background-color: #4effc4; color: black;">
+          <th style="border: 1px solid black; padding: 10px;">Produkt</th>
+          <th style="border: 1px solid black; padding: 10px;">Aktualny próg alarmowy (minimum wymagane)</th>
+          <th style="border: 1px solid black; padding: 10px;">Edytuj próg</th>
+        </tr>
+      </thead>
+      <tbody id="alarmyTableBody" style="color:black;">
+      </tbody>
+    </table>
+
+    <p id="message"></p>
+  </main>
+
+  <script>
+    function renderAlarmy() {
+      const magazyn = JSON.parse(localStorage.getItem('magazyn')) || [];
+      const tableBody = document.getElementById('alarmyTableBody');
+      tableBody.innerHTML = '';
+
+      magazyn.forEach((item, index) => {
+        const tr = document.createElement('tr');
+
+        // Pole input dla minimum
+        const minimumInput = document.createElement('input');
+        minimumInput.type = 'number';
+        minimumInput.value = item.minimum;
+        minimumInput.style.width = '80px';
+        minimumInput.style.padding = '5px';
+
+        // Obsługa zmiany minimum
+        minimumInput.addEventListener('change', () => {
+          const newMinimum = parseInt(minimumInput.value);
+          if (!isNaN(newMinimum)) {
+            item.minimum = newMinimum;
+            magazyn[index] = item;
+            localStorage.setItem('magazyn', JSON.stringify(magazyn));
+
+            // Komunikat
+            document.getElementById('message').textContent = `Zmieniono próg dla produktu "${item.produkt}" na ${newMinimum}`;
+          }
+        });
+
+        tr.innerHTML = `
+          <td style="background-color:#4effc4;border: 1px solid black; padding: 10px;">${item.produkt}</td>
+          <td style="background-color:#4effc4;border: 1px solid black; padding: 10px;">${item.minimum}</td>
+          <td style="background-color:#4effc4;border: 1px solid black; padding: 10px;"></td>
+        `;
+
+        // Wstawianie input do komórki "Edytuj próg"
+        tr.children[2].appendChild(minimumInput);
+
+        tableBody.appendChild(tr);
+      });
+    }
+
+    // Inicjalizacja
+    renderAlarmy();
+  </script>
+</body>
+</html>

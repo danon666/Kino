@@ -27,16 +27,16 @@
     </div>
   </header>
 
-<main style="display: flex; padding: 20px; gap: 50px;">
-    <section class="left-column" style="flex: 1; max-width: 600px;">
+<main id="seans">
+    <section class="left-column">
       <h2 id="film-title">Film</h2>
       <img id="film-img" src="" alt="Film" class="movie-poster">
       <p id="film-duration">Czas trwania: ...</p>
       <p id="film-premiere">Data premiery: ...</p>
     </section>
 
-    <div class="przerwa" style="flex: 2; max-width: 1000px;"></div>
-    <section class="right-column" style="flex: 3; max-width: 600px;">
+    <div class="przerwa"></div>
+    <section class="right-column">
       <h2>Najbliższe seanse</h2>
       <div class="schedule">
         <div class="day">
@@ -172,7 +172,7 @@
     const filmId = getQueryParam('id');
     const film = films[filmId];
 
-    // Jeśli znaleziono film, ustaw dane na stronie
+    // Ustawianie danych na stronie w przypadku znalezienia filmu
     if (film) {
       document.getElementById('film-title').textContent = film.title;
       document.getElementById('film-img').src = film.img;

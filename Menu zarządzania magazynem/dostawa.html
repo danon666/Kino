@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CINEMAX - Nowa dostawa</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+    <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania magazynem</span>
+        <a href="#">Magazynier</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>
+      <a href="przeglad.html">Przegląd zasobów</a>
+      <a class="active" href="dostawa.html">Nowa dostawa</a>
+      <a href="zuzycie.html">Zużycie produktów</a>
+      <a href="alarmy.html">Alarmy</a>
+    </div>
+  </header>
+
+  <main style="padding: 40px;">
+    <h2>Nowa dostawa</h2>
+
+    <form id="dostawaForm" style="max-width: 400px;">
+      <label for="produkt">Produkt:</label><br>
+      <select id="form">
+      </select><br>
+
+      <label for="ilosc">Ilość:</label><br>
+      <input type="number" id="form"><br>
+
+      <label for="data">Data dostawy:</label><br>
+      <input type="date" id="form"><br>
+
+      <button type="submit" style="padding: 10px 20px; font-weight: bold;">Zapisz dostawę</button>
+    </form>
+
+    <p id="message"></p>
+  </main>
+
+  <script>
+    const magazyn = JSON.parse(localStorage.getItem('magazyn')) || [];
+    const selectProdukt = document.getElementById('produkt');
+
+    magazyn.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item.produkt;
+      option.textContent = item.produkt;
+      selectProdukt.appendChild(option);
+    });
+
+    // Obsługa formularza
+    document.getElementById('dostawaForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const produkt = document.getElementById('produkt').value;
+      const ilosc = parseInt(document.getElementById('ilosc').value);
+      const data = document.getElementById('data').value;
+
+      if (!produkt || isNaN(ilosc) || !data) return;
+
+      // Pobierz istniejące dostawy
+      const dostawy = JSON.parse(localStorage.getItem('dostawy')) || [];
+
+      // Dodaj nową dostawę
+      dostawy.push({
+        produkt: produkt,
+        ilosc: ilosc,
+        data: data
+      });
+
+      localStorage.setItem('dostawy', JSON.stringify(dostawy));
+
+      document.getElementById('message').textContent = `Dodano dostawę: ${produkt}, ${ilosc} szt., ${data}`;
+
+      document.getElementById('dostawaForm').reset();
+    });
+  </script>
+</body>
+</html>

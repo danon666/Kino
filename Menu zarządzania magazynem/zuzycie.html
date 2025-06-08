@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINEMAX - Zużycie produktów</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+    <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Panel zarządzania magazynem</span>
+        <a href="#">Magazynier</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>
+      <a href="przeglad.html">Przegląd zasobów</a>
+      <a href="dostawa.html">Nowa dostawa</a>
+      <a class="active" href="zuzycie.html">Zużycie produktów</a>
+      <a href="alarmy.html">Alarmy</a>
+    </div>
+  </header>
+
+  <main style="padding: 40px;">
+    <h2>Generowanie raportu zużycia produktów</h2>
+
+    <form id="raportForm" style="max-width: 400px;">
+      <label for="produkt">Produkt:</label><br>
+      <select id="form">
+      </select><br>
+
+      <label for="dateFrom">Data od:</label><br>
+      <input type="date" id="form"><br>
+
+      <label for="dateTo">Data do:</label><br>
+      <input type="date" id="dateTo" required style="width: 100%; padding: 10px; margin-bottom: 20px;"><br>
+
+      <button type="submit" style="padding: 10px 20px; font-weight: bold;">Generuj raport</button>
+    </form>
+
+    <h3 style="margin-top: 30px;">Wynik raportu:</h3>
+    <p id="raportWynik" style="font-weight: bold;"></p>
+  </main>
+
+  <script>
+    const magazyn = JSON.parse(localStorage.getItem('magazyn')) || [];
+    const selectProdukt = document.getElementById('produkt');
+
+    magazyn.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item.produkt;
+      option.textContent = item.produkt;
+      selectProdukt.appendChild(option);
+    });
+
+    // Obsługa formularza
+    document.getElementById('raportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const produkt = document.getElementById('produkt').value;
+      const dateFrom = document.getElementById('dateFrom').value;
+      const dateTo = document.getElementById('dateTo').value;
+
+      if (!produkt || !dateFrom || !dateTo) return;
+
+      const zuzycie = JSON.parse(localStorage.getItem('zuzycie')) || [];
+
+      const filtered = zuzycie.filter(z => {
+        return z.produkt === produkt && z.data >= dateFrom && z.data <= dateTo;
+      });
+
+      const suma = filtered.reduce((total, z) => total + z.ilosc, 0);
+
+      document.getElementById('raportWynik').textContent = `Produkt: ${produkt}, Zużycie od ${dateFrom} do ${dateTo}: ${suma} szt.`;
+    });
+
+    if (!localStorage.getItem('zuzycie')) {
+      const initialZuzycie = [
+        { produkt: "Popcorn", data: "2025-06-01", ilosc: 20 },
+        { produkt: "Popcorn", data: "2025-06-05", ilosc: 15 },
+        { produkt: "Napoje gazowane", data: "2025-06-03", ilosc: 40 },
+        { produkt: "Cukierki", data: "2025-06-02", ilosc: 10 }
+      ];
+      localStorage.setItem('zuzycie', JSON.stringify(initialZuzycie));
+    }
+  </script>
+</body>
+</html>
