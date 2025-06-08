@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nowe zapytania</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    main {
+      padding: 40px;
+    }
+
+    h2 {
+      color: #4effc4;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .inquiry-card {
+      background-color: #4effc4;
+      color: black;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .inquiry-info {
+      flex: 1;
+    }
+
+    .inquiry-info h3 {
+      margin: 0 0 5px 0;
+    }
+
+    .inquiry-info p {
+      margin: 0;
+    }
+
+    .inquiry-button {
+      background-color: black;
+      color: #4effc4;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .inquiry-button:hover {
+      background-color: #33ddbb;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Menu obsługi klienta</span>
+        <a href="#">Admin</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a href="aktywne_rozmowy.html">Aktywne rozmowy</a>
+      <a class="active" href="nowe_zapytania.html">Nowe zapytania</a>
+      <a href="historia_rozmow.html">Historia rozmów</a>
+      <a href="szablony.html">Szablony</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Nowe zapytania od klientów</h2>
+    <div id="inquiryList"></div>
+  </main>
+
+  <script>
+    // Przykładowe zapytania (mogą być wczytane z localStorage lub API)
+    let inquiries = JSON.parse(localStorage.getItem('inquiries')) || [
+      { id: 1, client: 'Jan Kowalski', topic: 'Rezerwacja biletów', message: 'Chciałbym dowiedzieć się więcej o rezerwacji.' },
+      { id: 2, client: 'Anna Nowak', topic: 'Płatność', message: 'Nie mogę opłacić zamówienia.' },
+      { id: 3, client: 'Piotr Wiśniewski', topic: 'Promocje', message: 'Czy są jakieś aktualne zniżki?' }
+    ];
+
+    function renderInquiries() {
+      const inquiryList = document.getElementById('inquiryList');
+      inquiryList.innerHTML = '';
+
+      inquiries.forEach(inquiry => {
+        const card = document.createElement('div');
+        card.className = 'inquiry-card';
+
+        const info = document.createElement('div');
+        info.className = 'inquiry-info';
+
+        const title = document.createElement('h3');
+        title.textContent = inquiry.client + ' - ' + inquiry.topic;
+
+        const message = document.createElement('p');
+        message.textContent = inquiry.message;
+
+        info.appendChild(title);
+        info.appendChild(message);
+
+        const selectButton = document.createElement('button');
+        selectButton.className = 'inquiry-button';
+        selectButton.textContent = 'Wybierz';
+        selectButton.onclick = () => selectInquiry(inquiry);
+
+        card.appendChild(info);
+        card.appendChild(selectButton);
+
+        inquiryList.appendChild(card);
+      });
+    }
+
+    function selectInquiry(inquiry) {
+      alert(`Wybrano zapytanie od: ${inquiry.client}\nTemat: ${inquiry.topic}\nWiadomość: ${inquiry.message}`);
+      // Tutaj można przekierować do aktywnej rozmowy lub zmienić status zapytania
+    }
+
+    renderInquiries();
+  </script>
+</body>
+</html>

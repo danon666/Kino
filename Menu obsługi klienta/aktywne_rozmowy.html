@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aktywne rozmowy</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    main {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .chat-container {
+      flex: 3;
+      background-color: #4effc4;
+      color: black;
+      padding: 20px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      height: 500px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      background-color: white;
+      color: black;
+      padding: 10px;
+      margin-bottom: 10px;
+      overflow-y: auto;
+      border-radius: 8px;
+      border: 2px solid black;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid black;
+      font-size: 1rem;
+    }
+
+    .chat-input button {
+      background-color: black;
+      color: #4effc4;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .chat-input button:hover {
+      background-color: #33ddbb;
+    }
+
+    .right-column {
+      flex: 1;
+      background-color: #4effc4;
+      color: black;
+      padding: 15px;
+      border-radius: 8px;
+      height: 100%;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: black;
+    }
+
+    .message {
+      margin-bottom: 8px;
+    }
+
+    .message.user {
+      font-weight: bold;
+    }
+
+    .message.client {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Menu obsługi klienta</span>
+        <a href="#">Admin</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a class="active" href="aktywne_rozmowy.html">Aktywne rozmowy</a>
+      <a href="nowe_zapytania.html">Nowe zapytania</a>
+      <a href="historia_rozmow.html">Historia rozmów</a>
+      <a href="szablony.html">Szablony</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- LEWA KOLUMNA: Chat -->
+    <div class="chat-container">
+      <h2>Rozmowa na żywo</h2>
+      <div id="chatMessages" class="chat-messages"></div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Napisz wiadomość...">
+        <button onclick="sendMessage()">Wyślij</button>
+      </div>
+    </div>
+
+    <!-- PRAWA KOLUMNA: Dodatkowe informacje -->
+    <div class="right-column">
+      <h2>Informacje o rozmowie</h2>
+      <p><strong>Klient:</strong> Jan Kowalski</p>
+      <p><strong>Status:</strong> Aktywny</p>
+      <p><strong>Temat:</strong> Rezerwacja biletów</p>
+    </div>
+  </main>
+
+  <script>
+    let messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+
+    function renderMessages() {
+      const chatMessages = document.getElementById('chatMessages');
+      chatMessages.innerHTML = '';
+
+      messages.forEach(msg => {
+        const messageEl = document.createElement('div');
+        messageEl.className = 'message ' + msg.sender;
+        messageEl.textContent = `${msg.sender === 'user' ? 'Ty' : 'Klient'}: ${msg.text}`;
+        chatMessages.appendChild(messageEl);
+      });
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (text) {
+        messages.push({ sender: 'user', text });
+        localStorage.setItem('chatMessages', JSON.stringify(messages));
+        renderMessages();
+        input.value = '';
+
+        // symulacja odpowiedzi klienta (dla demo)
+        setTimeout(() => {
+          messages.push({ sender: 'client', text: 'Dziękuję za odpowiedź!' });
+          localStorage.setItem('chatMessages', JSON.stringify(messages));
+          renderMessages();
+        }, 1000);
+      }
+    }
+
+    renderMessages();
+  </script>
+</body>
+</html>
