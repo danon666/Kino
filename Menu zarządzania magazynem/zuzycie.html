@@ -29,11 +29,11 @@
 
     <form id="raportForm" style="max-width: 400px;">
       <label for="produkt">Produkt:</label><br>
-      <select id="form">
+      <select id="produkt" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
       </select><br>
 
       <label for="dateFrom">Data od:</label><br>
-      <input type="date" id="form"><br>
+      <input type="date" id="dateFrom" required style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
 
       <label for="dateTo">Data do:</label><br>
       <input type="date" id="dateTo" required style="width: 100%; padding: 10px; margin-bottom: 20px;"><br>
@@ -46,6 +46,7 @@
   </main>
 
   <script>
+    // Wczytanie produktów z magazynu do Produkt
     const magazyn = JSON.parse(localStorage.getItem('magazyn')) || [];
     const selectProdukt = document.getElementById('produkt');
 
@@ -68,21 +69,33 @@
 
       const zuzycie = JSON.parse(localStorage.getItem('zuzycie')) || [];
 
+      // Filtrowanie wpisów zużycia
       const filtered = zuzycie.filter(z => {
         return z.produkt === produkt && z.data >= dateFrom && z.data <= dateTo;
       });
 
+      // Suma zużycia
       const suma = filtered.reduce((total, z) => total + z.ilosc, 0);
 
       document.getElementById('raportWynik').textContent = `Produkt: ${produkt}, Zużycie od ${dateFrom} do ${dateTo}: ${suma} szt.`;
     });
-
     if (!localStorage.getItem('zuzycie')) {
       const initialZuzycie = [
         { produkt: "Popcorn", data: "2025-06-01", ilosc: 20 },
         { produkt: "Popcorn", data: "2025-06-05", ilosc: 15 },
         { produkt: "Napoje gazowane", data: "2025-06-03", ilosc: 40 },
-        { produkt: "Cukierki", data: "2025-06-02", ilosc: 10 }
+        { produkt: "Cukierki", data: "2025-06-02", ilosc: 10 },
+        { produkt: "Cukierki", data: "2025-06-04", ilosc: 5 },
+        { produkt: "Nachosy", data: "2025-06-01", ilosc: 30 },
+        { produkt: "Nachosy", data: "2025-06-06", ilosc: 25 },
+        { produkt: "Ser do nachosów", data: "2025-06-02", ilosc: 12 },
+        { produkt: "Ser do nachosów", data: "2025-06-07", ilosc: 8 },
+        { produkt: "Kubki papierowe", data: "2025-06-01", ilosc: 50 },
+        { produkt: "Kubki papierowe", data: "2025-06-08", ilosc: 30 },
+        { produkt: "Słomki", data: "2025-06-03", ilosc: 20 },
+        { produkt: "Słomki", data: "2025-06-09", ilosc: 15 },
+        { produkt: "Opakowania na popcorn", data: "2025-06-04", ilosc: 25 },
+        { produkt: "Opakowania na popcorn", data: "2025-06-10", ilosc: 20 }
       ];
       localStorage.setItem('zuzycie', JSON.stringify(initialZuzycie));
     }

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CINEMAX - Zwroty</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    main {
+      padding: 40px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      color: #4effc4;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input, select {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      width: 100%;
+    }
+
+    button {
+      background-color: #4effc4;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #4effc4;
+    }
+
+    .historia {
+      margin-top: 40px;
+    }
+
+    .historia h3 {
+      color: #4effc4;
+      margin-bottom: 10px;
+    }
+
+    .historia ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .historia li {
+      background-color: #222;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Zwroty</span>
+        <a href="#">Obsługa klienta</a>
+        <a href="../login.html">Logowanie</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a href="sprzedaz_biletow.html">Sprzedaż biletów</a>
+      <a href="sprzedaz_produktow.html">Sprzedaż produktów</a>
+      <a class="active" href="zwroty.html">Zwroty</a>
+      <a href="raporty.html">Raporty</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Zwrot biletu</h2>
+    <form id="zwrotForm">
+      <label for="numerBiletu">Numer biletu:</label>
+      <input type="text" id="numerBiletu" placeholder="np. BIL123456" required />
+
+      <label for="powod">Powód zwrotu:</label>
+      <select id="powod" required>
+        <option value="">-- wybierz powód --</option>
+        <option>Nie mogę przyjść</option>
+        <option>Błąd w rezerwacji</option>
+        <option>Zmiana planów</option>
+        <option>Inny powód</option>
+      </select>
+
+      <button type="submit">Zwróć bilet</button>
+    </form>
+
+    <div id="komunikat" class="message"></div>
+
+    <div class="historia">
+      <h3>Historia zwrotów</h3>
+      <ul id="historiaZwrotow"></ul>
+    </div>
+  </main>
+
+  <script>
+    const komunikatDiv = document.getElementById('komunikat');
+    const historiaList = document.getElementById('historiaZwrotow');
+
+    function zaladujHistorie() {
+      const zwroty = JSON.parse(localStorage.getItem('zwroty')) || [];
+      historiaList.innerHTML = "";
+
+      zwroty.reverse().forEach(entry => {
+        const li = document.createElement('li');
+        li.textContent = `Bilet: ${entry.numer}, Powód: ${entry.powod}, Data: ${entry.data}`;
+        historiaList.appendChild(li);
+      });
+    }
+
+    document.getElementById('zwrotForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const numer = document.getElementById('numerBiletu').value.trim();
+      const powod = document.getElementById('powod').value;
+
+      if (!numer || !powod) return;
+
+      const nowyZwrot = {
+        numer,
+        powod,
+        data: new Date().toLocaleString()
+      };
+
+      const zwroty = JSON.parse(localStorage.getItem('zwroty')) || [];
+      zwroty.push(nowyZwrot);
+      localStorage.setItem('zwroty', JSON.stringify(zwroty));
+
+      komunikatDiv.textContent = `Zwrot biletu ${numer} został przyjęty. Powód: ${powod}`;
+      this.reset();
+      zaladujHistorie();
+    });
+
+    // Ładowanie historii przy starcie
+    zaladujHistorie();
+  </script>
+</body>
+</html>

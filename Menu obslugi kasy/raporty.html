@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CINEMAX - Raporty kasowe</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    
+    main {
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      color: #4effc4;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input, select {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      width: 100%;
+    }
+
+    button {
+      background-color: #4effc4;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .wynik {
+      margin-top: 30px;
+      font-weight: bold;
+      color: #4effc4;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Raporty kasowe</span>
+        <a href="#">Obsługa klienta</a>
+        <a href="../login.html">Logowanie</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>
+      <a href="sprzedaz_biletow.html">Sprzedaż biletów</a>
+      <a href="sprzedaz_produktow.html">Sprzedaż produktów</a>
+      <a href="zwroty.html">Zwroty</a>
+      <a class="active" href="raporty.html">Raporty</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Generowanie raportu kasowego</h2>
+    <form id="raportForm">
+      <label for="rodzaj">Rodzaj raportu:</label>
+      <select id="rodzaj" required>
+        <option value="">-- wybierz --</option>
+        <option value="bilety">Sprzedaż biletów</option>
+        <option value="produkty">Sprzedaż produktów</option>
+        <option value="zwroty">Zwroty</option>
+      </select>
+
+      <label for="dataOd">Data od:</label>
+      <input type="date" id="dataOd" required>
+
+      <label for="dataDo">Data do:</label>
+      <input type="date" id="dataDo" required>
+
+      <button type="submit">Generuj raport</button>
+    </form>
+
+    <div id="wynik" class="wynik"></div>
+  </main>
+
+  <script>
+    document.getElementById("raportForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const rodzaj = document.getElementById("rodzaj").value;
+      const dataOd = document.getElementById("dataOd").value;
+      const dataDo = document.getElementById("dataDo").value;
+
+      if (!rodzaj || !dataOd || !dataDo) return;
+
+      const dateFrom = new Date(dataOd);
+      const dateTo = new Date(dataDo);
+      dateTo.setHours(23, 59, 59); // uwzględnij cały dzień
+
+      let wynik = "";
+
+      if (rodzaj === "bilety") {
+        const bilety = JSON.parse(localStorage.getItem("bilety")) || [];
+        const filtered = bilety.filter(b => {
+          const d = new Date(b.data);
+          return d >= dateFrom && d <= dateTo;
+        });
+        const suma = filtered.reduce((sum, b) => sum + (b.cena || 0), 0);
+        wynik = `Sprzedano ${filtered.length} biletów na kwotę ${suma} zł.`;
+
+      } else if (rodzaj === "produkty") {
+        const sprzedaz = JSON.parse(localStorage.getItem("sprzedazProduktow")) || [];
+        const filtered = sprzedaz.filter(p => {
+          const d = new Date(p.data);
+          return d >= dateFrom && d <= dateTo;
+        });
+        const suma = filtered.reduce((sum, p) => sum + (p.cena || 0), 0);
+        wynik = `Sprzedano ${filtered.length} produktów na kwotę ${suma} zł.`;
+
+      } else if (rodzaj === "zwroty") {
+        const zwroty = JSON.parse(localStorage.getItem("zwroty")) || [];
+        const filtered = zwroty.filter(z => {
+          const d = new Date(z.data);
+          return d >= dateFrom && d <= dateTo;
+        });
+        wynik = `Wykonano ${filtered.length} zwrotów.`;
+      }
+
+      document.getElementById("wynik").textContent = `📆 Raport za okres ${dataOd} – ${dataDo}: ${wynik}`;
+    });
+  </script>
+</body>
+</html>

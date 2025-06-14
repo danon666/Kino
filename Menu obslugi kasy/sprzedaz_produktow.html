@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CINEMAX - Sprzedaż produktów</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    h2 {
+      color: #4effc4;
+      margin-bottom: 30px;
+    }
+    .produkty {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .produkt {
+      background-color: #1f3556;
+      padding: 20px;
+      border-radius: 10px;
+      width: 220px;
+      text-align: center;
+    }
+
+    .produkt h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .produkt p {
+      margin: 0 0 15px;
+      font-size: 16px;
+    }
+
+    .produkt button {
+      background-color: #4effc4;
+      color: black;
+      border: none;
+      padding: 8px 16px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .koszyk {
+      margin-top: 40px;
+    }
+
+    .koszyk p {
+      font-size: 16px;
+    }
+
+    .koszyk button {
+      margin-top: 10px;
+      background-color: #4effc4;
+      color: black;
+      padding: 10px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #podsumowanie {
+      color:black;
+      width: 70%;
+      height: 100px;
+      background-color: #4effc4;
+      text-align: center;
+      display: block;
+      margin-top: 20px;
+      float:right;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Sprzedaż produktów</span>
+        <a href="#">Obsługa klienta</a>
+        <a href="../login.html">Logowanie</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a href="sprzedaz_biletow.html">Sprzedaż biletów</a>
+      <a class="active" href="sprzedaz_produktow.html">Sprzedaż produktów</a>
+      <a href="zwroty.html">Zwroty</a>
+      <a href="raporty.html">Raporty</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Wybierz produkt</h2>
+    <div class="produkty">
+      <div class="produkt">
+        <h3>Popcorn</h3>
+        <p>10 zł</p>
+        <button onclick="dodajDoKoszyka('Popcorn', 10)">Dodaj</button>
+      </div>
+      <div class="produkt">
+        <h3>Nachosy</h3>
+        <p>12 zł</p>
+        <button onclick="dodajDoKoszyka('Nachosy', 12)">Dodaj</button>
+      </div>
+      <div class="produkt">
+        <h3>Napój</h3>
+        <p>7 zł</p>
+        <button onclick="dodajDoKoszyka('Napój', 7)">Dodaj</button>
+      </div>
+      <div class="produkt">
+        <h3>Woda</h3>
+        <p>5 zł</p>
+        <button onclick="dodajDoKoszyka('Woda', 5)">Dodaj</button>
+      </div>
+      <div class="produkt">
+        <h3>Słodycze</h3>
+        <p>9 zł</p>
+        <button onclick="dodajDoKoszyka('Słodycze', 9)">Dodaj</button>
+      </div>
+    </div>
+
+    <div class="koszyk">
+  <h3>Koszyk</h3>
+  <p id="podsumowanie">Brak produktów</p>
+  <div style="display: flex; gap: 20px; margin-top: 10px;">
+    <button onclick="platnosc('kartą')">Płatność kartą</button>
+    <button onclick="platnosc('gotówką')">Płatność gotówką</button>
+  </div>
+</div>
+
+  </main>
+
+  <script>
+  let koszyk = [];
+
+  function dodajDoKoszyka(nazwa, cena) {
+    koszyk.push({ nazwa, cena });
+    aktualizujKoszyk();
+  }
+
+  function aktualizujKoszyk() {
+    if (koszyk.length === 0) {
+      document.getElementById('podsumowanie').textContent = "Brak produktów";
+      return;
+    }
+
+    const grouped = {};
+    koszyk.forEach(p => {
+      if (!grouped[p.nazwa]) {
+        grouped[p.nazwa] = { ilosc: 1, cena: p.cena };
+      } else {
+        grouped[p.nazwa].ilosc++;
+      }
+    });
+
+    const opis = Object.entries(grouped)
+      .map(([nazwa, { ilosc }]) => `${nazwa} x${ilosc}`)
+      .join(", ");
+
+    const suma = koszyk.reduce((acc, p) => acc + p.cena, 0);
+
+    document.getElementById('podsumowanie').textContent = `Wybrano: ${opis} | Suma: ${suma} zł`;
+  }
+
+  function platnosc(typ) {
+    if (koszyk.length === 0) {
+      alert("Koszyk jest pusty. Dodaj produkty przed dokonaniem płatności.");
+      return;
+    }
+
+    setTimeout(() => {
+      alert(`Płatność ${typ} została dokonana.\nDziękujemy za zakupy!`);
+      koszyk = [];
+      aktualizujKoszyk();
+    }, 300); 
+  }
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINEMAX - Menu obsługi klienta</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+      background-color: black;
+    }
+
+    .titles {
+      display: flex;
+      gap: 40px;
+      margin: 40px 0;
+    }
+
+    .title {
+      width: 250px;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .title-left {
+      background-color: #1f3556;
+    }
+
+    .title-right {
+      background-color: #555;
+    }
+
+    .bottom-buttons {
+      display: flex;
+      gap: 120px;
+      margin-top: 20px;
+    }
+
+    .bottom-buttons button {
+      background-color: #4effc4;
+      border: none;
+      padding: 15px 40px;
+      font-size: 16px;
+      font-weight: bold;
+      color: black;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+    <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Menu obsługi klienta</span>
+        <a href="#">Obsługa kasy</a>
+        <a href="../login.html">Logowanie</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a class="active" href="index.html">Strona główna</a>  
+      <a href="index_kasa.html">Sprzedaż biletów</a>
+      <a href="sprzedaz_produktow.html">Sprzedaż produktów</a>
+      <a href="zwroty.html">Zwroty</a>
+      <a href="raporty.html">Raporty</a>
+    </div>
+  </header>
+  <main>
+    <div class="titles">
+      <a href="index_kasa.html"><div class="title title-left">Wybierz film oraz seans</div></a>
+      <a href="sprzedaz_produktow.html"><div class="title title-right">Wybierz przekąskę/napój</div></a>
+    </div>
+
+    <div class="bottom-buttons">
+      <button onclick="location.href='zwroty.html'">Wykonaj zwrot</button>
+      <button onclick="location.href='raporty.html'">Pokaż raporty</button>
+    </div>
+  </main>
+</body>
+</html>

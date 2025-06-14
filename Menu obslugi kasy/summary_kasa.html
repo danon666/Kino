@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CINEMAX</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Szczecin</span>
+        <a href="#">Logowanie</a>
+        <a href="#">Rejestracja</a>
+        <a href="#">Szukaj</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a class="active" href="index.html">Repertuar</a>
+      <a href="#">Zapowiedzi</a>
+      <a href="#">Bar kinowy</a>
+      <a href="#">Szkoły</a>
+      <a href="#">Rodziny</a>
+      <a href="#">Wydarzenia</a>
+    </div>
+  </header>
+
+  <main class="checkout-container">
+    <div class="summary-img">
+      <img src="../zdj1.jpg" alt="Film" />
+    </div>
+    
+    <div class="summary-box">
+      <p class="summary-title">Podsumowanie:</p>
+      <p>2x bilet C3,C4</p>
+      <p>Wybierz metodę płatności:</p>
+      <form class="payment-methods">
+        <label><input type="radio" name="payment" /> Karta</label><br>
+        <label><input type="radio" name="payment" /> Gotówka</label><br>
+      </form>
+      <p class="summary-price">Suma: xx,xx zł</p>
+      <button class="pay-button">ZAPŁATA</button>
+    </div>
+  </main>
+  <script>
+  const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
+  const numberOfTickets = selectedSeats.length;
+  const filmId = localStorage.getItem('filmId');
+
+  const films = {
+    1: {
+      img: "../zdj1.jpg"
+    },
+    2: {
+      img: "../zdj2.png"
+    },
+    3: {
+      img: "../zdj3.jpg"
+    },
+    4: {
+      img: "../zdj4.png"
+    }
+  };
+
+  // Ustawianie opisu wybranych miejsc
+  const summaryParagraph = document.querySelector('.summary-box p:nth-of-type(2)');
+  if (numberOfTickets > 0) {
+    summaryParagraph.textContent = numberOfTickets + 'x bilet ' + selectedSeats.join(', ');
+  } else {
+    summaryParagraph.textContent = 'Brak wybranych miejsc';
+  }
+
+  // Ustawianie zdjęcia filmu
+  const film = films[filmId];
+  if (film) {
+    document.querySelector('.summary-img img').src = film.img;
+  }
+</script>
+</body>
+</html>

@@ -29,22 +29,23 @@
 
     <form id="dostawaForm" style="max-width: 400px;">
       <label for="produkt">Produkt:</label><br>
-      <select id="form">
+      <select id="produkt" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
       </select><br>
 
       <label for="ilosc">Ilość:</label><br>
-      <input type="number" id="form"><br>
+      <input type="number" id="ilosc" required style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
 
       <label for="data">Data dostawy:</label><br>
-      <input type="date" id="form"><br>
+      <input type="date" id="data" required style="width: 100%; padding: 10px; margin-bottom: 20px;"><br>
 
       <button type="submit" style="padding: 10px 20px; font-weight: bold;">Zapisz dostawę</button>
     </form>
 
-    <p id="message"></p>
+    <p id="message" style="color: green; font-weight: bold; margin-top: 20px;"></p>
   </main>
 
   <script>
+    // Wczytanie produkty z magazynu do listy Produkt
     const magazyn = JSON.parse(localStorage.getItem('magazyn')) || [];
     const selectProdukt = document.getElementById('produkt');
 
@@ -65,20 +66,23 @@
 
       if (!produkt || isNaN(ilosc) || !data) return;
 
-      // Pobierz istniejące dostawy
+      // Pobranie istniejących dostaw
       const dostawy = JSON.parse(localStorage.getItem('dostawy')) || [];
 
-      // Dodaj nową dostawę
+      // Dodanie nowej dostawy
       dostawy.push({
         produkt: produkt,
         ilosc: ilosc,
         data: data
       });
 
+      // Zapis do localStorage
       localStorage.setItem('dostawy', JSON.stringify(dostawy));
 
+      // Potwierdzenie
       document.getElementById('message').textContent = `Dodano dostawę: ${produkt}, ${ilosc} szt., ${data}`;
 
+      // Czyszczenie formularza
       document.getElementById('dostawaForm').reset();
     });
   </script>
