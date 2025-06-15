@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historia rozmów</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    main {
+      padding: 40px;
+    }
+
+    h2 {
+      color: #4effc4;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .conversation-card {
+      background-color: #4effc4;
+      color: black;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .conversation-card:hover {
+      background-color: #33ddbb;
+    }
+
+    .conversation-details {
+      background-color: #ffffff;
+      color: black;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      border: 2px solid #4effc4;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .message strong {
+      display: block;
+      color: #333;
+    }
+
+    .message span {
+      display: inline-block;
+      margin-left: 10px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1 class="logo">CINEMAX</h1>
+      <nav class="top-nav">
+        <span>Menu obsługi klienta</span>
+        <a href="#">Admin</a>
+      </nav>
+    </div>
+    <div class="menu-bar">
+      <a href="index.html">Strona główna</a>  
+      <a href="aktywne_rozmowy.html">Aktywne rozmowy</a>
+      <a href="nowe_zapytania.html">Nowe zapytania</a>
+      <a class="active" href="historia_rozmow.html">Historia rozmów</a>
+      <a href="szablony.html">Szablony</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Historia rozmów</h2>
+    <div id="conversationList"></div>
+    <div id="conversationDetails" class="conversation-details" style="display:none;"></div>
+  </main>
+
+  <script>
+    const conversations = JSON.parse(localStorage.getItem('conversationHistory')) || [
+      {
+        id: 1,
+        client: 'Jan Kowalski',
+        date: '2025-06-10',
+        messages: [
+          { sender: 'client', text: 'Czy są zniżki dla studentów?' },
+          { sender: 'admin', text: 'Tak, od poniedziałku do środy 20% zniżki.' }
+        ]
+      },
+      {
+        id: 2,
+        client: 'Anna Nowak',
+        date: '2025-06-11',
+        messages: [
+          { sender: 'client', text: 'Nie mogę dokończyć płatności.' },
+          { sender: 'admin', text: 'Proszę spróbować ponownie lub zmienić przeglądarkę.' }
+        ]
+      }
+    ];
+
+    function renderConversations() {
+      const list = document.getElementById('conversationList');
+      list.innerHTML = '';
+
+      conversations.forEach(conv => {
+        const card = document.createElement('div');
+        card.className = 'conversation-card';
+        card.textContent = `${conv.client} – ${conv.date}`;
+        card.onclick = () => showDetails(conv);
+        list.appendChild(card);
+      });
+    }
+
+    function showDetails(conv) {
+      const details = document.getElementById('conversationDetails');
+      details.style.display = 'block';
+      details.innerHTML = `<h3>Rozmowa z ${conv.client} (${conv.date})</h3>`;
+      conv.messages.forEach(msg => {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message';
+        msgDiv.innerHTML = `<strong>${msg.sender === 'admin' ? 'Ty' : conv.client}:</strong> <span>${msg.text}</span>`;
+        details.appendChild(msgDiv);
+      });
+    }
+
+    renderConversations();
+  </script>
+</body>
+</html>
