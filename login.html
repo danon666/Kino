@@ -14,6 +14,7 @@
       background-color: #4effc4;
       font-family: Arial, sans-serif;
     }
+
     .login-box {
       background-color: white;
       padding: 40px;
@@ -23,12 +24,14 @@
       max-width: 400px;
       width: 100%;
     }
+
     input {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
       font-size: 16px;
     }
+
     button {
       background-color: #000;
       color: white;
@@ -39,11 +42,13 @@
       cursor: pointer;
       width: 100%;
     }
+
     .error {
       color: red;
       margin-top: 10px;
       font-weight: bold;
     }
+
     h1 {
       margin-bottom: 20px;
     }
@@ -60,33 +65,40 @@
     </form>
   </div>
 
-
-  <!-- skrypt autoryzujący logowanie-->
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const login = document.getElementById('login').value.trim();
       const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('error');
 
-      const destinations = {
-        "admin": "Panel zarządzania systemem/index.html",
-        "obs_klienta": "Menu obsługi klienta/index.html",
-        "magazyn": "Menu zarządzania magazynem/index.html",
-        "kierownik": "Panel zarządzania pracownikami/index.html",
-        "klient": "index.html",
-        "kasa": "Menu obsługi kasy/index.html",
-      };
+      try {
+        const response = await fetch('login.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ login, password })
+        });
 
-      if (password !== "1234") {
-        document.getElementById('error').textContent = "Nieprawidłowe hasło!";
-        return;
-      }
+        const result = await response.json();
 
-      if (destinations[login]) {
-        window.location.href = destinations[login];
-      } else {
-        document.getElementById('error').textContent = "Nieznany login!";
+        if (result.success) {
+          const destinations = {
+            "admin": "Panel zarządzania systemem/index.html",
+            "obs_klienta": "Menu obsługi klienta/index.html",
+            "magazyn": "Menu zarządzania magazynem/index.html",
+            "kierownik": "Panel zarządzania pracownikami/index.html",
+            "klient": "index.html",
+            "kasa": "Menu obsługi kasy/index.html"
+          };
+
+          window.location.href = destinations[result.rola] || 'index.html';
+        } else {
+          errorDiv.textContent = "Nieprawidłowy login lub hasło!";
+        }
+      } catch (error) {
+        errorDiv.textContent = "Błąd połączenia z serwerem.";
+        console.error("Błąd logowania:", error);
       }
     });
   </script>
